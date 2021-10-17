@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cover</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="books"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeMd="4" offsetMd="4">
+        <div *ngIf="book">
+          <ion-card>
+            <ion-card-content>
+              <ion-card-title class="ion-text-center">
+                {{book.volumeInfo.title}}
+              </ion-card-title>
+              <div class="ion-text-center ion-padding">
+                <div *ngIf="book.volumeInfo.imageLinks; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                  <img src="{{book.volumeInfo.imageLinks.thumbnail}}" alt="">
+                </ng-template>
+                <ng-template #elseBlock>
+                  <img src="https://www.magisnet.com/wp-content/uploads/2020/05/pagina4libros.jpg" alt="">
+                </ng-template>
+              </div>
+              <p *ngIf="book.volumeInfo.subtitle" class="ion-padding">
+                <ion-text>Subtítulo: {{book.volumeInfo.subtitle}}</ion-text>
+              </p>
+              <p *ngIf="book.volumeInfo.authors" class="ion-padding-bottom">
+                <ion-text>Autores: {{book.volumeInfo.authors.join(', ')}}</ion-text>
+              </p>
+              <p *ngIf="book.volumeInfo.categories">
+                <ion-text>Categorías: {{book.volumeInfo.categories.join(', ')}}</ion-text>
+              </p>
+            </ion-card-content>
+          </ion-card>
+          <ion-card *ngIf="book.volumeInfo.description">
+            <ion-card-content>
+              <ion-card-title>
+                Description
+              </ion-card-title>
+              <p>
+                {{book.volumeInfo.description}}
+              </p>
+            </ion-card-content>
+          </ion-card>
+          <div *ngIf="book.accessInfo" slot="end">
+            <div *ngIf="book.accessInfo.epub.isAvailable">
+              <ion-button href="{{book.accessInfo.epub.downloadLink}}" target="_blank">
+                <ion-icon name="arrow-down"></ion-icon>
+                Descargar Epub
+                <ion-icon name="book"></ion-icon>
+              </ion-button>
+            </div>
+            <div *ngIf="book.accessInfo.pdf.isAvailable">
+              <ion-button color="secondary" href="{{book.accessInfo.pdf.downloadLink}}" target="_blank">
+                <ion-icon name="arrow-down" slot="start"></ion-icon>
+                Descargar PDF
+                <ion-icon name="document" slot="end"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Books</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeMd="4" offsetMd="4">
+        <ion-list>
+          <ion-item *ngFor="let book of books" [routerLink]="['/cover/' + book.id]">
+            <ion-avatar slot="start">
+                <div *ngIf="book.volumeInfo.imageLinks; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                  <img src="{{book.volumeInfo.imageLinks.smallThumbnail}}" alt="">
+                </ng-template>
+                <ng-template #elseBlock>
+                  <img src="https://www.magisnet.com/wp-content/uploads/2020/05/pagina4libros.jpg" alt="">
+                </ng-template>              
+            </ion-avatar>
+            <ion-label>{{book.volumeInfo.title}}</ion-label>
+          </ion-item>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab *ngIf="page>0" vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button color="primary" size="small" (click)="previousPage()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" size="small" (click)="nextPage()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
